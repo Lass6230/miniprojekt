@@ -141,8 +141,11 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
  add_executable(thing src/thing.cpp)
  add_executable(node_2 src/node_2.cpp)
+<<<<<<< HEAD
  add_executable(new_oprette src/new_oprette.cpp)
  add_executable(drive_and_write src/drive_and_write.cpp)
+=======
+>>>>>>> b541e4b98d695655da08bfd3b1c99e727dd944bf
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -161,6 +164,7 @@ target_link_libraries(thing
 target_link_libraries(node_2
   ${catkin_LIBRARIES}
 )
+<<<<<<< HEAD
 target_link_libraries(new_oprette
   ${catkin_LIBRARIES}
 )
@@ -169,6 +173,8 @@ target_link_libraries(drive_and_write
 )
 
 
+=======
+>>>>>>> b541e4b98d695655da08bfd3b1c99e727dd944bf
 #############
 ## Install ##
 #############
