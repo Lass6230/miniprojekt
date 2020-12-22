@@ -11,6 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
     roscpp
     rospy
     geometry_msgs
+    my_code_msgs
+    actionlib
+
 )
 
 ## System dependencies are found with CMake's conventions
@@ -52,6 +55,7 @@ find_package(catkin REQUIRED COMPONENTS
 #   Message1.msg
 #   Message2.msg
 # )
+
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -105,7 +109,9 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES miniprojekt
-#  CATKIN_DEPENDS other_catkin_pkg
+
+  CATKIN_DEPENDS my_code_msgs
+
 #  DEPENDS system_lib
 )
 
@@ -134,6 +140,9 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
  add_executable(thing src/thing.cpp)
+ add_executable(node_2 src/node_2.cpp)
+ add_executable(new_oprette src/new_oprette.cpp)
+ add_executable(drive_and_write src/drive_and_write.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -149,6 +158,16 @@ include_directories(
 target_link_libraries(thing
   ${catkin_LIBRARIES}
 )
+target_link_libraries(node_2
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(new_oprette
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(drive_and_write
+  ${catkin_LIBRARIES}
+)
+
 
 #############
 ## Install ##
