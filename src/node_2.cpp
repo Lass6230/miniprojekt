@@ -3,9 +3,10 @@
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
 // #include "my_code_msgs/myString.h"
+#include <my_code_msgs/driveBase.h>
 //  #include <my_code_msgs/CountUntilAction.h>
 // #include <my_code_msgs/CountUntilGoal.h>
-// #include <my_code_msgs/CountUntilResult.h>
+// #include <my_code_msgs/CaountUntilResult.h>
 // #include <my_code_msgs/CountUntilFeedback.h>
 using namespace std;
 
@@ -34,6 +35,7 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "node_2");
     ros::NodeHandle n;
+	ros::ServiceClient client = n.serviceClient<my_code_msgs::driveBase>("service_ting");
     // ros::ServiceServer service = n.advertiseService("myString",text);
     ROS_INFO("Ready to do action.");
     actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> ac("sender", true);
@@ -44,6 +46,8 @@ int main(int argc, char **argv)
 	}
 
 	move_base_msgs::MoveBaseGoal goal;
+	my_code_msgs::driveBase serviceGoal;
+
 
 	//set up the frame parameters
 	goal.target_pose.header.frame_id = "map";
@@ -59,9 +63,25 @@ int main(int argc, char **argv)
 	goal.target_pose.pose.orientation.z = 6.0;
 	goal.target_pose.pose.orientation.w = 3.0;
 
+	serviceGoal.request.x = 2.0;
+	serviceGoal.request.y = 3.0;
+	serviceGoal.request.z = 4.0;
+	serviceGoal.request.w = 5.0;
+
+
+
 	ROS_INFO("Sending goal location ...");
   cout << goal << '\n';
 	ac.sendGoal(goal);
+	ROS_INFO("sending service goal");
+	if(client.call(serviceGoal)){
+		cout << "repons" << serviceGoal.response.i << endl;
+	}
+	else{
+		cout << "fejlet i at tage kontakt" << endl;
+
+	}
+	ROS_INFO("service sendt");
     ac.waitForResult();
     // Server my_server(n, "CountUtil",boost::bind(&execute, _1, &my_server), false);
     // my_server.start();

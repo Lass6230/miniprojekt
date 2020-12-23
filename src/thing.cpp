@@ -2,7 +2,7 @@
 #include "ros/ros.h"
 #include <actionlib/server/simple_action_server.h>
 #include <move_base_msgs/MoveBaseAction.h>
-// #include "my_code_msgs/myString.h"
+#include "my_code_msgs/driveBase.h"
 
 // #include <my_code_msgs/CountUntilAction.h>
 // #include <my_code_msgs/CountUntilGoal.h>
@@ -11,7 +11,7 @@
 using namespace std;
 
 void ExecuteCallback(const move_base_msgs::MoveBaseGoal::ConstPtr &msg);
-  
+bool Seout(my_code_msgs::driveBase &req, my_code_msgs::driveBase &res);
 
 // typedef actionlib::SimpleActionClient<my_code_msgs::CountUntilAction> Client;
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
    ros::NodeHandle nh;
     actionlib::SimpleActionServer<move_base_msgs::MoveBaseAction> ac(nh,"sender", ExecuteCallback , false);
     ac.start();
-    ros::ServiceServer service = nh.advertiseService("sevice_ting",);
+    ros::ServiceServer service = nh.advertiseService("sevice_ting",Seout);
     
     
     ros::spin();
@@ -76,3 +76,20 @@ void ExecuteCallback(const move_base_msgs::MoveBaseGoalConstPtr &msg){
     cout << mg << endl;
     
 }
+
+bool Seout(my_code_msgs::driveBaseConstPtr &req, my_code_msgs::driveBaseConstPtr &res){
+    float x_ny = static_cast<float>(req->x);
+    float y_ny = static_cast<float>(req->y);
+    float z_ny = static_cast<float>(req->z);
+    float w_ny = static_cast<float>(req->w);
+    
+    cout << "service x: " << x_ny << endl;
+    cout << "service y: " << y_ny << endl;
+    cout << "service z: " << z_ny << endl;
+    cout << "service w: " << w_ny << endl;
+    
+    res.i= true;
+    ROS_INFO("sending true back");
+    return true;
+}
+
