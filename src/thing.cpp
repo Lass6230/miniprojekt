@@ -9,18 +9,19 @@
 // #include <my_code_msgs/CountUntilResult.h>
 // #include <my_code_msgs/CountUntilFeedback.h>
 using namespace std;
-void ExecuteCallback(const move_base_msgs::MoveBaseGoalConstPtr &msg){
-    ROS_INFO("hej med jer");
-}
+
+void ExecuteCallback(const move_base_msgs::MoveBaseGoal::ConstPtr &msg);
+  
 
 // typedef actionlib::SimpleActionClient<my_code_msgs::CountUntilAction> Client;
 
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "thing");
-    ros::NodeHandle nh;
+   ros::NodeHandle nh;
     actionlib::SimpleActionServer<move_base_msgs::MoveBaseAction> ac(nh,"sender", ExecuteCallback , false);
     ac.start();
+    ros::ServiceServer service = nh.advertiseService("sevice_ting",);
     
     
     ros::spin();
@@ -54,6 +55,24 @@ int main(int argc, char **argv)
     // {
     //     ROS_INFO("det virkede ikke");
     // }
-
+    ROS_INFO("første hey");
+    // ac.result(true);
+    ROS_INFO("hey");
     return 0;
+}
+
+void ExecuteCallback(const move_base_msgs::MoveBaseGoalConstPtr &msg){
+    ROS_INFO("hej med jer");
+    move_base_msgs::MoveBaseGoal mg;
+    
+    double x = static_cast<double>(msg->target_pose.pose.position.x);
+    double y = static_cast<double>(msg->target_pose.pose.position.y);
+    double z = static_cast<double>(msg->target_pose.pose.orientation.z);
+    double w = static_cast<double>(msg->target_pose.pose.orientation.w);
+    cout << "x: " << x << endl;
+    cout << "y: " << y << endl;
+    cout << "z: " << z << endl;
+    cout << "w: " << w << endl;
+    cout << mg << endl;
+    
 }
